@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>Board - Demo</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row align-items-center">
+        <div class="col-auto me-auto">
+            <h1 class="d-none">homepage</h1>
+        </div>
+        <div class="col-auto">
+            <a href="/post/add" class="btn btn-outline-primary btn-sm">add post</a>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">title</th>
+                <th scope="col">description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="post : ${postList}">
+                <td>
+                    <a th:href="@{/post/view/{id}(id=${post.id})}"
+                       th:text="${post.title}">title</a>
+                </td>
+                <td th:text="${post.description}">description</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

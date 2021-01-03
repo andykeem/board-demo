@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/default}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${post.title}">view post</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="mb-3" th:switch="${isCommentAdded}">
+            <div th:case="true" class="text-success">Your comment has been added.</div>
+            <div th:case="false" class="text-danger">Failed to add your comment.</div>
+        </div>
+        <div class="row">
+            <div class="col-3 bg-light">title:</div>
+            <div class="col" th:text="${post.title}">post title</div>
+        </div>
+        <div class="row">
+            <div class="col-3 bg-light">description:</div>
+            <div class="col" th:text="${post.description}">post description</div>
+        </div>
+        <div class="row">
+            <div class="col-3 bg-light">posted at:</div>
+            <div class="col" th:text="${post.createdAt}">posted at</div>
+        </div>
+        <hr />
+        <form action="#" th:action="@{/comment/save}" th:object="${comment}" method="post">
+            <input type="hidden" name="post_id" th:value="${post.id}" />
+            <div class="mb-3">
+                <label class="form-label">comment</label>
+                <textarea class="form-control" th:field="*{text}"></textarea>
+            </div>
+            <div class="row">
+                <div class="col-auto ms-auto">
+                    <input type="submit" class="btn btn-primary ms-auto" value="add" />
+                </div>
+            </div>
+        </form>
+        <div class="mt-5">
+            <ul class="list-group" th:each="cmnt : ${post.commentList}">
+                <li class="list-group-item" th:text="${cmnt.text}">comment</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

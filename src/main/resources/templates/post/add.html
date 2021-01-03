@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/default}">
+<head>
+    <meta charset="UTF-8">
+    <title>New Post</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <form action="#" th:action="@{save}" th:object="${post}" method="post">
+            <div class="mb-3">
+                <label class="form-label">Title</label>
+                <input class="form-control" th:field="*{title}" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" th:field="*{description}">description</textarea>
+            </div>
+<!--            <div class="row-md-2 offset-md-10 justify-content-end">-->
+            <div class="row">
+                <div class="col-auto ms-auto">
+                    <input class="btn btn-primary" type="submit" value="save" />
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
