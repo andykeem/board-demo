@@ -23,7 +23,7 @@
         </div>
         <div class="row">
             <div class="col-md-3 text-md-end text-start text-muted">posted at:</div>
-            <div class="col small" th:text="${post.createdAt}">posted at</div>
+            <div class="col small" th:text="${#dates.format(post.createdAt, 'dd-MMM-yyyy HH:mm')}">posted at</div>
         </div>
         <hr />
         <form action="#" th:action="@{/comment/save}" th:object="${comment}" method="post">

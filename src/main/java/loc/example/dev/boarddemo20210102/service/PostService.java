@@ -53,4 +53,11 @@ public class PostService {
     public void deleteById(long id) {
         postRepo.deleteById(id);
     }
+
+    public void incrementNumClicks(Post post) {
+        int numClicks = post.getNumClicks();
+        numClicks += 1;
+        post.setNumClicks(numClicks);
+        postRepo.save(post);
+    }
 }

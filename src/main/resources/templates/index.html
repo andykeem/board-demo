@@ -23,18 +23,22 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th scope="col">#</th>
                 <th scope="col">title</th>
-                <th scope="col">description</th>
+                <th scope="col">comment(s)</th>
+                <th scope="col">click(s)</th>
                 <th scope="col">action</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="post : ${postList}">
+                <td th:text="${post.id}">id</td>
                 <td>
                     <a th:href="@{/post/view/{id}(id=${post.id})}"
                        th:text="${post.title}">title</a>
                 </td>
-                <td th:text="${post.description}">description</td>
+                <td th:text="${post.numComments}">number of comment(s)</td>
+                <td th:text="${post.numClicks}">number of click(s)</td>
                 <td>
                     <a th:href="@{/post/edit/{id}(id=${post.id})}">edit</a>
                     <a th:href="@{/post/delete/{id}(id=${post.id})}"

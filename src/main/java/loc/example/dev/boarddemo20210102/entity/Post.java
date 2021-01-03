@@ -22,6 +22,7 @@ public class Post extends AuditModel {
 
     private String title;
     private String description;
+    private int numClicks;
 
 //    private User user;
 
@@ -34,6 +35,10 @@ public class Post extends AuditModel {
         }
         cmnt.setPost(this);
         commentList.add(cmnt);
+    }
+
+    public int numComments() {
+        return commentList.size();
     }
 
     @Override

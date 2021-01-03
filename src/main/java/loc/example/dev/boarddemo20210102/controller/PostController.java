@@ -33,13 +33,15 @@ public class PostController {
     }
 
     @PostMapping(path = "/save")
-    public String save(@ModelAttribute("post") Post post, BindingResult result) {
+    public String save(@ModelAttribute("post") Post post, BindingResult result,
+                       RedirectAttributes redirect) {
         logger.info("post: {}", post);
         logger.info("result: {}", result);
         if (result.hasErrors()) {
             return "redirect:/edit";
         }
         postService.save(post);
+        redirect.addFlashAttribute("message", "Your post has been updated");
         return "redirect:/";
     }
 
@@ -51,6 +53,8 @@ public class PostController {
 
         Comment cmnt = new Comment();
         model.addAttribute("comment", cmnt);
+
+        postService.incrementNumClicks(post);
         return "/post/view";
     }
 
