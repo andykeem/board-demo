@@ -16,11 +16,16 @@
             <a href="/post/add" class="btn btn-outline-primary btn-sm">add post</a>
         </div>
     </div>
+    <div>
+        <div class="text-success" th:if="${message}" th:text="${message}">message</div>
+        <div th:unless="${message}">&nbsp;</div>
+    </div>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">title</th>
                 <th scope="col">description</th>
+                <th scope="col">action</th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +35,11 @@
                        th:text="${post.title}">title</a>
                 </td>
                 <td th:text="${post.description}">description</td>
+                <td>
+                    <a th:href="@{/post/edit/{id}(id=${post.id})}">edit</a>
+                    <a th:href="@{/post/delete/{id}(id=${post.id})}"
+                       onclick="return confirm('Do you really want to delete this post?')">delete</a>
+                </td>
             </tr>
         </tbody>
     </table>

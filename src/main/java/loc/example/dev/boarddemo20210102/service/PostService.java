@@ -49,4 +49,8 @@ public class PostService {
         }
         return new Post();
     }
+
+    public void deleteById(long id) {
+        postRepo.deleteById(id);
+    }
 }

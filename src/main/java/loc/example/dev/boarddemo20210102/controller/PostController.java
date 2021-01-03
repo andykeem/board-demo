@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/post")
@@ -28,13 +29,15 @@ public class PostController {
         logger.info("PostController.add() method called..");
         Post post = new Post();
         model.addAttribute("post", post);
-        return "post/add";
+        return "post/edit";
     }
 
     @PostMapping(path = "/save")
     public String save(@ModelAttribute("post") Post post, BindingResult result) {
+        logger.info("post: {}", post);
+        logger.info("result: {}", result);
         if (result.hasErrors()) {
-            return "redirect:/add";
+            return "redirect:/edit";
         }
         postService.save(post);
         return "redirect:/";
@@ -49,5 +52,20 @@ public class PostController {
         Comment cmnt = new Comment();
         model.addAttribute("comment", cmnt);
         return "/post/view";
+    }
+
+    @GetMapping(path = "/edit/{id}")
+    public String edit(@PathVariable int id, Model model) {
+        Post post = postService.findById(id);
+        model.addAttribute("post", post);
+        return "post/edit";
+    }
+
+    @GetMapping(path = "/delete/{id}")
+    public String delete(@PathVariable int id, RedirectAttributes redirect) {
+        postService.deleteById(id);
+        String msg = String.format("Post id: %d has been deleted", id);
+        redirect.addFlashAttribute("message", msg);
+        return "redirect:/";
     }
 }

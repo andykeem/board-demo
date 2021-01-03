@@ -5,11 +5,12 @@
       layout:decorate="~{layout/default}">
 <head>
     <meta charset="UTF-8">
-    <title>New Post</title>
+    <title>Update Post</title>
 </head>
 <body>
     <div layout:fragment="content">
-        <form action="#" th:action="@{save}" th:object="${post}" method="post">
+        <form action="#" th:action="@{/post/save}" th:object="${post}" method="post">
+            <input type="hidden" th:field="*{id}" />
             <div class="mb-3">
                 <label class="form-label">Title</label>
                 <input class="form-control" th:field="*{title}" />

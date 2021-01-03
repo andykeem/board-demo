@@ -25,7 +25,7 @@ public class Post extends AuditModel {
 
 //    private User user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private Set<Comment> commentList;
 
     public void addComment(Comment cmnt) {
