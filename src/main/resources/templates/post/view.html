@@ -14,16 +14,16 @@
             <div th:case="false" class="text-danger">Failed to add your comment.</div>
         </div>
         <div class="row">
-            <div class="col-3 bg-light">title:</div>
+            <div class="col-md-3 text-md-end text-start text-muted">title:</div>
             <div class="col" th:text="${post.title}">post title</div>
         </div>
         <div class="row">
-            <div class="col-3 bg-light">description:</div>
+            <div class="col-md-3 text-md-end text-start text-muted">description:</div>
             <div class="col" th:text="${post.description}">post description</div>
         </div>
         <div class="row">
-            <div class="col-3 bg-light">posted at:</div>
-            <div class="col" th:text="${post.createdAt}">posted at</div>
+            <div class="col-md-3 text-md-end text-start text-muted">posted at:</div>
+            <div class="col small" th:text="${post.createdAt}">posted at</div>
         </div>
         <hr />
         <form action="#" th:action="@{/comment/save}" th:object="${comment}" method="post">

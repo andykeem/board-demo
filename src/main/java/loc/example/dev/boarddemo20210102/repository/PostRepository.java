@@ -11,6 +11,4 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findAllByOrderByIdDesc();
-
-    Optional<Post> findByIdOrderByCommentIdDesc(Long id);
 }
