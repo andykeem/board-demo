@@ -32,7 +32,7 @@ public class HomeConroller {
     public String index(Model model, @RequestParam("page") Optional<Integer> page) {
         logger.info("HomeController.index() method called..");
 
-        int pg = page.orElse(1);
+        int pg = page.orElse(1) - 1;
         Page<Post> post = postService.findAllByOrderByIdDesc(pg);
         model.addAttribute("post", post);
 
