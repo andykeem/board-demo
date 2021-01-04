@@ -17,13 +17,14 @@
 
         <ul class="nav justify-content-end">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                <a th:if="not(${#httpServletRequest.requestURI == '/'})" class="nav-link active" aria-current="page" th:href="@{/}">home</a>
+                <a th:if="${#httpServletRequest.requestURI == '/'}" class="nav-link disabled" tabindex="-1" aria-disabled="true">home</a>
             </li>
+            <!--<li class="nav-item">
+                <a class="nav-link" href="#">my account</a>
+            </li>-->
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Menu</a>
+                <a class="nav-link" href="#">login</a>
             </li>
             <!--<li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>

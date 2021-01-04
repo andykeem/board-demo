@@ -29,6 +29,13 @@ public class Post extends AuditModel {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private Set<Comment> commentList;
 
+    public Post(long id, String title, String description, int numClicks) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.numClicks = numClicks;
+    }
+
     public void addComment(Comment cmnt) {
         if (commentList == null) {
             commentList = new HashSet<>();
