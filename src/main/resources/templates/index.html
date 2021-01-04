@@ -33,7 +33,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="post : ${postList}">
+            <tr th:each="post : ${post.content}">
                 <td class="col-1" th:text="${post.id}">id</td>
                 <td class="col-6">
                     <a th:href="@{/post/view/{id}(id=${post.id})}"
@@ -49,6 +49,22 @@
             </tr>
         </tbody>
     </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+
+                <li class="page-item" th:each="pg : ${pages}">
+                    <a href="#" class="page-link" th:text="${pg}">1</a>
+                </li>
+
+<!--            <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--            <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--            <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </nav>
 </div>
 </body>
 </html>

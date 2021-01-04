@@ -41,10 +41,10 @@ public class PreloadData implements ApplicationListener<ContextRefreshedEvent> {
         List<DummyPost> posts = getDummyPosts();
         logger.info("posts: {}", posts);
 
-        insertPosts(posts);
+//        importPosts(posts);
     }
 
-    private void insertPosts(List<DummyPost> posts) {
+    private void importPosts(List<DummyPost> posts) {
         posts.forEach(new Consumer<DummyPost>() {
             @Override
             public void accept(DummyPost dummyPost) {

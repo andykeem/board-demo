@@ -4,15 +4,21 @@ import loc.example.dev.boarddemo20210102.entity.Comment;
 import loc.example.dev.boarddemo20210102.entity.Post;
 import loc.example.dev.boarddemo20210102.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.function.Supplier;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class PostService {
 
+    public static final int PAGE_SIZE = 10;
     private final PostRepository postRepo;
 
     @Autowired
@@ -24,12 +30,14 @@ public class PostService {
         return postRepo.save(post);
     }
 
-    public List<Post> findAll() {
-        return postRepo.findAll();
+    public Page<Post> findAll(int page) {
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+        return postRepo.findAll(pageable);
     }
 
-    public List<Post> findAllByOrderByIdDesc() {
-        return postRepo.findAllByOrderByIdDesc();
+    public Page<Post> findAllByOrderByIdDesc(int page) {
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+        return postRepo.findAllByOrderByIdDesc(pageable);
     }
 
     public Post findById(long id) {
