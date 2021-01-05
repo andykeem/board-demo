@@ -8,41 +8,47 @@
     <title th:text="${post.title}">view post</title>
 </head>
 <body>
-    <div layout:fragment="content">
-        <div class="mb-3" th:switch="${isCommentAdded}">
-            <div th:case="true" class="text-success">Your comment has been added.</div>
-            <div th:case="false" class="text-danger">Failed to add your comment.</div>
+<div layout:fragment="content">
+    <div class="mb-3" th:switch="${isCommentAdded}">
+        <div th:case="true" class="text-success">Your comment has been added.</div>
+        <div th:case="false" class="text-danger">Failed to add your comment.</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 text-md-end text-start text-muted">title:</div>
+        <div class="col" th:text="${post.title}">post title</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 text-md-end text-start text-muted">description:</div>
+        <div class="col" th:text="${post.description}">post description</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 text-md-end text-start text-muted">posted at:</div>
+        <div class="col small" th:text="${#dates.format(post.createdAt, 'dd-MMM-yyyy HH:mm')}">posted at</div>
+    </div>
+    <hr/>
+    <form action="#" th:action="@{/comment/save}" th:object="${comment}" method="post">
+        <input type="hidden" name="post_id" th:value="${post.id}"/>
+        <div class="mb-3">
+            <label class="form-label">comment</label>
+            <textarea class="form-control" th:field="*{text}"></textarea>
         </div>
         <div class="row">
-            <div class="col-md-3 text-md-end text-start text-muted">title:</div>
-            <div class="col" th:text="${post.title}">post title</div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 text-md-end text-start text-muted">description:</div>
-            <div class="col" th:text="${post.description}">post description</div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 text-md-end text-start text-muted">posted at:</div>
-            <div class="col small" th:text="${#dates.format(post.createdAt, 'dd-MMM-yyyy HH:mm')}">posted at</div>
-        </div>
-        <hr />
-        <form action="#" th:action="@{/comment/save}" th:object="${comment}" method="post">
-            <input type="hidden" name="post_id" th:value="${post.id}" />
-            <div class="mb-3">
-                <label class="form-label">comment</label>
-                <textarea class="form-control" th:field="*{text}"></textarea>
+            <div class="col-auto ms-auto">
+                <input type="submit" class="btn btn-primary ms-auto" value="add"/>
             </div>
-            <div class="row">
-                <div class="col-auto ms-auto">
-                    <input type="submit" class="btn btn-primary ms-auto" value="add" />
-                </div>
-            </div>
-        </form>
-        <div class="mt-5">
-            <ul class="list-group" th:each="cmnt : ${post.commentList}">
-                <li class="list-group-item" th:text="${cmnt.text}">comment</li>
-            </ul>
+        </div>
+    </form>
+
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
+        <div class="media text-muted pt-3" th:each="cmnt : ${post.commentList}">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">@username</strong>
+                <span th:text="${cmnt.text}">comment</span>
+            </p>
         </div>
     </div>
+
+</div>
 </body>
 </html>

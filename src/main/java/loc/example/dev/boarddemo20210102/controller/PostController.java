@@ -72,4 +72,10 @@ public class PostController {
         redirect.addFlashAttribute("message", msg);
         return "redirect:/";
     }
+
+    @PostMapping(path = "/search")
+    public String search(@RequestParam("term") String term) {
+        logger.info("search term: {}", term);
+        return "redirect:/";
+    }
 }

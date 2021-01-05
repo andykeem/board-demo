@@ -11,18 +11,20 @@
     <h1 class="d-none">homepage</h1>
     <div class="row align-items-center">
         <div class="col-auto me-auto">
-            <div class="text-success" th:if="${message}" th:text="${message}">message</div>
-            <div th:unless="${message}">&nbsp;</div>
-        </div>
-        <div class="col-auto">
             <a href="/post/add" class="btn btn-outline-primary btn-sm">add post</a>
         </div>
-    </div>
-    <div>
-
+        <div class="col-auto">
+            <form class="d-flex" th:action="@{/post/search}" method="post">
+                <input class="me-2" type="search" placeholder="search" aria-label="search" name="term">
+                <button class="btn btn-outline-primary btn-sm" type="submit">search</button>
+            </form>
+        </div>
     </div>
     <table class="table table-striped caption-top">
-        <caption>list of post(s)</caption>
+        <caption>
+            <span class="me-3">list of post(s)</span>
+            <span class="text-success" th:text="(${message} == null) ? '' : ${message}">message</span>
+        </caption>
         <thead>
             <tr>
                 <th scope="col">#</th>
