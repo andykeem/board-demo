@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -30,15 +31,25 @@ public class PostService {
         return postRepo.save(post);
     }
 
-    public Page<Post> findAll(int page) {
-        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+    public Page<Post> findAll(int page, Optional<String> term) {
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE, Sort.by("id").descending());
+        if (term.isPresent()) {
+            return postRepo.findByDescriptionContainsOrTitleContainsIgnoreCase(
+                    term.get(), term.get(), pageable);
+        }
         return postRepo.findAll(pageable);
     }
 
-    public Page<Post> findAllByOrderByIdDesc(int page) {
+    /*public Page<Post> findAllByOrderByIdDesc(int page) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
         return postRepo.findAllByOrderByIdDesc(pageable);
     }
+
+    public Page<Post> findAllByTitleOrDescriptionContaining(int page, String term) {
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE, Sort.by("id").descending());
+        return postRepo
+                .findByTitleContaining(pageable, term);
+    }*/
 
     public Post findById(long id) {
         Optional<Post> optPost = postRepo.findById(id);

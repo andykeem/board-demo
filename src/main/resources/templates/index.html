@@ -14,7 +14,7 @@
             <a href="/post/add" class="btn btn-outline-primary btn-sm">add post</a>
         </div>
         <div class="col-auto">
-            <form class="d-flex" th:action="@{/post/search}" method="post">
+            <form class="d-flex" th:action="@{/}" method="post">
                 <input class="me-2" type="search" placeholder="search" aria-label="search" name="term">
                 <button class="btn btn-outline-primary btn-sm" type="submit">search</button>
             </form>
@@ -62,7 +62,7 @@
             <li th:each="pg : ${pages}" th:class="${pg == post.number + 1} ? 'page-item active' : 'page-item'">
                 <a href="#" th:href="@{/(page=${pg})}" class="page-link" th:text="${pg}">1</a>
             </li>
-            <li th:class="(${post.number} < ${post.size - 1}) ? 'page-item' : 'page-item disabled'">
+            <li th:class="(${post.number + 1} < ${post.totalPages}) ? 'page-item' : 'page-item disabled'">
                 <a class="page-link" th:href="@{/(page=${(post.number + 1) + 1})}">
                     <span aria-hidden="true">&raquo;</span>
                 </a>

@@ -9,7 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.thymeleaf.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -28,12 +30,15 @@ public class HomeConroller {
         this.postService = postService;
     }
 
-    @GetMapping("/")
-    public String index(Model model, @RequestParam("page") Optional<Integer> page) {
+    @RequestMapping("/")
+    public String index(Model model, @RequestParam("page") Optional<Integer> page,
+                        @RequestParam("term") Optional<String> term) {
         logger.info("HomeController.index() method called..");
+        logger.info("page: {}", page);
+        logger.info("search term: {}", term);
 
         int pg = page.orElse(1) - 1;
-        Page<Post> post = postService.findAllByOrderByIdDesc(pg);
+        Page<Post> post = postService.findAll(pg, term);
         model.addAttribute("post", post);
 
         if (post.getTotalPages() > 0) {
@@ -42,6 +47,9 @@ public class HomeConroller {
                     .collect(Collectors.toList());
             model.addAttribute("pages", pages);
         }
+        logger.info("post.number: {}, post.size: {}, post.totalPages: {}",
+                post.getNumber(), post.getSize(), post.getTotalPages());
+        int num = post.getNumber();
         return "index";
     }
 }
