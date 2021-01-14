@@ -4,8 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @Data
@@ -16,6 +16,8 @@ public class Comment extends AuditModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank
+    @Size(min = 6, max = 255, message = "must be greater than 6 characters")
     private String text;
 
     @ManyToOne
@@ -34,10 +36,14 @@ public class Comment extends AuditModel {
 
     @Override
     public String toString() {
+        long postId = 0;
+        if (post != null) {
+            postId = post.getId();
+        }
         return "Comment{" +
                 "id=" + id +
                 ", text='" + text + '\'' +
-                ", post=" + post.getId() +
+                ", post=" + postId +
                 '}';
     }
 }

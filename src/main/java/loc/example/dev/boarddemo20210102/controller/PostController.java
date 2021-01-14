@@ -12,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/post")
 public class PostController {
@@ -73,9 +75,14 @@ public class PostController {
         return "redirect:/";
     }
 
-    @PostMapping(path = "/search")
-    public String search(@RequestParam("term") String term) {
-        logger.info("search term: {}", term);
-        return "redirect:/";
+    @PostMapping("view/{id}")
+    public String saveComment(@PathVariable int id, @Valid @ModelAttribute("comment") Comment comment,
+                              BindingResult result, RedirectAttributes redirect, Model model) {
+        if (result.hasErrors()) {
+            Post post = postService.findById(id);
+            model.addAttribute("post", post);
+            return "/post/view";
+        }
+        return "redirect:/post/view/" + id;
     }
 }

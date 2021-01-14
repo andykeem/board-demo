@@ -39,7 +39,7 @@ public class PreloadData implements ApplicationListener<ContextRefreshedEvent> {
         logger.info("contextRefreshedEvent: {}", contextRefreshedEvent);
 
         List<DummyPost> posts = getDummyPosts();
-        logger.info("posts: {}", posts);
+//        logger.info("posts: {}", posts);
 
 //        importPosts(posts);
     }

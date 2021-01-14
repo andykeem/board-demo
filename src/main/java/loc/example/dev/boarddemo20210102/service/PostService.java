@@ -69,6 +69,11 @@ public class PostService {
         return new Post();
     }
 
+    public Post findById(String id) {
+        long postId = Long.parseLong(id);
+        return findById(postId);
+    }
+
     public void deleteById(long id) {
         postRepo.deleteById(id);
     }
