@@ -27,12 +27,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/h2-console/**", "/", "/login", "/user/register")
+            .antMatchers("/h2-console/**", "/", "/login", "/user/register")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
-                .and()
-                .formLogin();
+            .and()
+                .formLogin()
+            .and()
+                .logout()
+                .logoutSuccessUrl("/");
         // enable h2-console access
         http.csrf().disable();
         http.headers().frameOptions().disable();
