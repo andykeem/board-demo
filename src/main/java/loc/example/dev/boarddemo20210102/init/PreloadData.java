@@ -38,17 +38,21 @@ public class PreloadData implements ApplicationListener<ContextRefreshedEvent> {
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         logger.info("contextRefreshedEvent: {}", contextRefreshedEvent);
 
-        List<DummyPost> posts = getDummyPosts();
-//        logger.info("posts: {}", posts);
+//        importPostData();
+    }
 
-//        importPosts(posts);
+    private void importPostData() {
+        List<DummyPost> posts = getDummyPosts();
+        logger.info("posts: {}", posts);
+
+        importPosts(posts);
     }
 
     private void importPosts(List<DummyPost> posts) {
         posts.forEach(new Consumer<DummyPost>() {
             @Override
             public void accept(DummyPost dummyPost) {
-                int numClicks = ThreadLocalRandom.current().nextInt(100);
+                int numClicks = ThreadLocalRandom.current().nextInt(50);
                 Post post = new Post(
                         dummyPost.getId(),
                         dummyPost.getTitle(),
