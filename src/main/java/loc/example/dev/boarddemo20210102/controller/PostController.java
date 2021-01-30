@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/post")
@@ -36,13 +37,13 @@ public class PostController {
 
     @PostMapping(path = "/save")
     public String save(@ModelAttribute("post") Post post, BindingResult result,
-                       RedirectAttributes redirect) {
+                       RedirectAttributes redirect, Principal principal) {
         logger.info("post: {}", post);
         logger.info("result: {}", result);
         if (result.hasErrors()) {
             return "redirect:/edit";
         }
-        postService.save(post);
+        postService.save(post, principal);
         redirect.addFlashAttribute("message", "Your post has been updated");
         return "redirect:/";
     }

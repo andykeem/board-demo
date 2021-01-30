@@ -24,7 +24,9 @@ public class Post extends AuditModel {
     private String description;
     private int numClicks;
 
-//    private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private Set<Comment> commentList;

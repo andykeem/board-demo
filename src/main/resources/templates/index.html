@@ -15,7 +15,7 @@
         </div>
         <div class="col-auto">
             <form class="d-flex" th:action="@{/}" method="post">
-                <input class="me-2" type="search" placeholder="search" aria-label="search" name="term">
+                <input class="me-2" type="search" placeholder="search" aria-label="search" name="term" th:value="${term}" />
                 <button class="btn btn-outline-primary btn-sm" type="submit">search</button>
             </form>
         </div>
@@ -31,7 +31,7 @@
                 <th scope="col">title</th>
                 <th scope="col">comment(s)</th>
                 <th scope="col">click(s)</th>
-                <th scope="col" class="ps-3">action</th>
+                <th scope="col" class="ps-3" th:if="${principal != null}">action</th>
             </tr>
         </thead>
         <tbody>
@@ -43,7 +43,7 @@
                 </td>
                 <td class="col-1 text-center" th:text="${post.numComments}">number of comment(s)</td>
                 <td class="col-1 text-center" th:text="${post.numClicks}">number of click(s)</td>
-                <td class="col-3">
+                <td class="col-3" th:if="${principal != null}">
                     <a class="btn btn-outline-primary btn-sm" th:href="@{/post/edit/{id}(id=${post.id})}">edit</a>
                     <a class="btn btn-outline-primary btn-sm" th:href="@{/post/delete/{id}(id=${post.id})}"
                        onclick="return confirm('Do you really want to delete this post?')">delete</a>

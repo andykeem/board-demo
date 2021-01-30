@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 
 import javax.annotation.PostConstruct;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -32,7 +35,7 @@ public class HomeConroller {
 
     @RequestMapping("/")
     public String index(Model model, @RequestParam("page") Optional<Integer> page,
-                        @RequestParam("term") Optional<String> term) {
+                        @RequestParam("term") Optional<String> term, Principal principal) {
         logger.info("HomeController.index() method called..");
         logger.info("page: {}", page);
         logger.info("search term: {}", term);
@@ -49,7 +52,13 @@ public class HomeConroller {
         }
         logger.info("post.number: {}, post.size: {}, post.totalPages: {}",
                 post.getNumber(), post.getSize(), post.getTotalPages());
-        int num = post.getNumber();
+
+        model.addAttribute("principal", principal);
+        model.addAttribute("term", term.orElseGet(() -> ""));
+
+        post.getContent()
+                .forEach((postItem) -> logger.info("principal: {}, post.user: {}", principal, postItem.getUser()));
+
         return "index";
     }
 }
