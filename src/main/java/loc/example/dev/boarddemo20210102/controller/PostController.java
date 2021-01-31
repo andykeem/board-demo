@@ -2,6 +2,7 @@ package loc.example.dev.boarddemo20210102.controller;
 
 import loc.example.dev.boarddemo20210102.entity.Comment;
 import loc.example.dev.boarddemo20210102.entity.Post;
+import loc.example.dev.boarddemo20210102.service.CommentService;
 import loc.example.dev.boarddemo20210102.service.PostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,10 +22,12 @@ public class PostController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass().getName());
     private final PostService postService;
+    private final CommentService cmntService;
 
     @Autowired
-    public PostController(PostService postService) {
+    public PostController(PostService postService, CommentService cmntService) {
         this.postService = postService;
+        this.cmntService = cmntService;
     }
 
     @GetMapping(path = "/add")
@@ -58,7 +61,24 @@ public class PostController {
         model.addAttribute("comment", cmnt);
 
         postService.incrementNumClicks(post);
-        return "/post/view";
+        return "post/view";
+    }
+
+    // saves post's comment
+    @PostMapping("view/{id}")
+    public String saveComment(@PathVariable int id, @Valid @ModelAttribute("comment") Comment comment,
+                              BindingResult result, RedirectAttributes redirect, Model model, Principal principal) {
+        logger.info("comment: {}", comment);
+        logger.info("principal: {}", principal);
+        if (result.hasErrors()) {
+            Post post = postService.findById(id);
+            model.addAttribute("post", post);
+            return "/post/view";
+        }
+        Comment cmnt = cmntService.save(comment, principal);
+        logger.info("comment saved: {}", cmnt);
+
+        return "redirect:/post/view/" + id;
     }
 
     @GetMapping(path = "/edit/{id}")
@@ -74,16 +94,5 @@ public class PostController {
         String msg = String.format("Post id: %d has been deleted", id);
         redirect.addFlashAttribute("message", msg);
         return "redirect:/";
-    }
-
-    @PostMapping("view/{id}")
-    public String saveComment(@PathVariable int id, @Valid @ModelAttribute("comment") Comment comment,
-                              BindingResult result, RedirectAttributes redirect, Model model) {
-        if (result.hasErrors()) {
-            Post post = postService.findById(id);
-            model.addAttribute("post", post);
-            return "/post/view";
-        }
-        return "redirect:/post/view/" + id;
     }
 }

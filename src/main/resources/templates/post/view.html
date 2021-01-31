@@ -27,7 +27,8 @@
     </div>
     <hr/>
     <form action="#" th:action="@{/post/view/{id}(id=${post.id})}" th:object="${comment}" method="post">
-        <input type="hidden" name="post_id" th:value="${post.id}"/>
+        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" name="post.id" th:value="${post.id}" />
         <div class="mb-3">
             <label class="form-label">comment</label>
             <textarea th:class="(${#fields.hasErrors('text')}) ? 'form-control is-invalid' : 'form-control'"
@@ -46,7 +47,7 @@
         <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
         <div class="media text-muted pt-3" th:each="cmnt : ${post.commentList}">
             <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@username</strong>
+                <strong class="d-block text-gray-dark" th:text="${'@' + cmnt.user.username}">@username</strong>
                 <span th:text="${cmnt.text}">comment</span>
             </p>
         </div>

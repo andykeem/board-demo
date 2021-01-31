@@ -24,7 +24,9 @@ public class Comment extends AuditModel {
     @JoinColumn(name = "post_id")
     private Post post;
 
-//    private User user;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public void setPostId(String pid) {
         long id = Long.parseLong(pid);
