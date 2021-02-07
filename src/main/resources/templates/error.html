@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/default}">
+<head>
+    <meta charset="UTF-8">
+    <title>Error Page</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h4>something went wrong!</h4>
+    <p>our engineers are on it</p>
+    <p class="text-danger" th:if="${exception != null && exception.message != null}"
+       th:text="${exception.message}">error message</p>
+    <a th:href="@{/}">go home</a>
+</div>
+</body>
+</html>

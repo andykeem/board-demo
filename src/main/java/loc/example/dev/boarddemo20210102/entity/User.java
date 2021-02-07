@@ -21,6 +21,7 @@ public class User implements UserDetails {
     private long id;
 
     @NotBlank
+    @Column(unique = true, nullable = false)
     private String username;
 
     @NotBlank
